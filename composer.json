@@ -1,5 +1,5 @@
 {
-    "name": "19peaches/laravel-generator",
+    "name": "goopil/laravel-generator",
     "description": "Laravel CRUD Generator/Model/Migrate from just one command with including Controller, Service, Repository, Model, Migrations, routes.php update.",
     "keywords": ["dais", "laravel", "model", "migration", "scaffold", "CRUD", "generator"],
     "license": "MIT",
@@ -9,6 +9,9 @@
         },
         {
             "name": "Vince Kronlein"
+        },
+        {
+            "name": "Zachary Volpi"
         }
     ],
     "require": {
