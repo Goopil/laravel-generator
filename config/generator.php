@@ -11,8 +11,8 @@ return [
     |
      */
 
-    'base_controller' => 'Dais\Base\Controller',
-    'base_name'       => 'Dais\Base',
+    'base_controller' => 'App\Http\Controllers\Controller',
+    'base_name'       => 'App\Http\Controllers',
 
     /*
     |--------------------------------------------------------------------------
@@ -25,17 +25,17 @@ return [
 
     'path_migration'  => base_path('database/migrations/'),
     
-    'path_model'      => app_path('Models/'),
+    'path_model'      => app_path('Entities/Models/'),
     
-    'path_repository' => app_path('Repositories/'),
+    'path_repository' => app_path('Entities/Repositories/'),
     
-    'path_service'    => app_path('Services/'),
+    'path_service'    => app_path('Entities/Services/'),
     
-    'path_controller' => app_path('Controllers/'),
+    'path_controller' => app_path('Http/Controllers/'),
     
     'path_view'       => base_path('resources/views/'),
     
-    'path_request'    => app_path('Requests/'),
+    'path_request'    => app_path('Http/Requests/'),
     
     'path_route'      => app_path('routes.php'),
     
@@ -50,15 +50,15 @@ return [
     |
      */
 
-    'namespace_model'      => 'Dais\Models',
+    'namespace_model'      => 'App\Entities\Models',
     
-    'namespace_repository' => 'Dais\Repositories',
+    'namespace_repository' => 'App\Entities\Repositories',
     
-    'namespace_service'    => 'Dais\Services',
+    'namespace_service'    => 'App\Entities\Services',
     
-    'namespace_controller' => 'Dais\Controllers',
+    'namespace_controller' => 'App\Http\Controllers',
     
-    'namespace_request'    => 'Dais\Requests',
+    'namespace_request'    => 'App\Http\Requests',
 
     /*
     |--------------------------------------------------------------------------
