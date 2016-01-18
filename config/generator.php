@@ -12,7 +12,7 @@ return [
      */
 
     'base_controller' => 'App\Http\Controllers\Controller',
-    'base_name'       => 'App\Http\Controllers',
+    'base_name'       => 'App\\',
 
     /*
     |--------------------------------------------------------------------------
@@ -111,9 +111,14 @@ return [
     | You also can setting to only create repository
     | Or if you want to only use Eloquent, you can set 2 below options is false.
      */
-    'use_repository_layer' => true,
+    'use_repository_layer' => false,
     
-    'use_service_layer'    => true,
+    'use_service_layer'    => false,
+
+    'use_request_layer'    => false,
+
+    // pivots tables included in scaffolding
+    'pivot_scaffold' => true,
 
     /*
     |--------------------------------------------------------------------------

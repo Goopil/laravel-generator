@@ -77,4 +77,6 @@ class ForeignKeyParser
 
         return str_replace(array('-', '.'), '_', $index);
     }
+
+
 }

@@ -13,7 +13,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'generator:publish {--all} {--templates} {--baseRepository}';
+    protected $signature = 'generator:publish {--all} {--templates} {--baseRepository} {--config}';
 
     /**
      * The console command description.
@@ -33,13 +33,25 @@ class PublishCommand extends Command
             $this->publishCommonViews();
             $this->publishTemplates();
             $this->publishBaseRepository();
+            $this->publishConfig();
         } elseif ($this->option('templates')) {
             $this->publishTemplates();
         } elseif ($this->option('baseRepository')) {
             $this->publishBaseRepository();
+        } elseif ($this->option('config')) {
+            $this->publishConfig();
         } else {
             $this->publishCommonViews();
         }
+    }
+    public function publishConfig()
+    {
+        $fileName =  'generator.php';
+        $sourcePath = __DIR__ . '/../../config/';
+        $destinationPath = config_path() . '/';
+
+        $this->publishFile($sourcePath . $fileName, $destinationPath . $fileName, $fileName);
+
     }
 
     /**

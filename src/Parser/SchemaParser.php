@@ -74,7 +74,7 @@ class SchemaParser
     {
         $fillableFields = [];
         foreach ($schema as $fieldName => $column) {
-            if (empty($column['field']) || in_array($column['field'], $this->guardFields)) {
+            if (empty($column['field']) || is_array($column['field'])|| in_array($column['field'], $this->guardFields)) {
                 continue;
             }
 
@@ -103,5 +103,34 @@ class SchemaParser
     {
         $schema = $this->getFields($table);
         return $this->getFillableFieldsFromSchema($schema);
+    }
+
+    /**
+     * return the the interesect on primary index and foreign key.
+     * if we have 2 primary key that are also foreign key without a type field it should be a pivot table !
+     *
+     * @param $table
+     * @return array
+     */
+    public function checkPivots($table)
+    {
+        $foreignKeys = $this->schema->listTableForeignKeys($table);
+        $indexes = $this->schema->listTableIndexes($table);
+
+        $toto = [];
+        foreach($foreignKeys as $key)
+        {
+            $toto[] = $key->getLocalColumns();
+        }
+
+        $tata = [];
+        foreach($indexes as $key)
+        {
+            if($key->isPrimary())
+
+            $tata[] = $key->getColumns();;
+        }
+
+        return array_intersect(array_flatten($toto), array_flatten($tata));
     }
 }

@@ -22,12 +22,16 @@ class ControllerGenerator extends BaseGenerator implements GeneratorInterface
     public function getTemplatePath()
     {
         // get template filename
-        $useRepositoryLayer = config('generator.use_repository_layer', true);
-        $useServiceLayer = config('generator.use_service_layer', true);
+        $useRepositoryLayer = config('generator.use_repository_layer', false);
+        $useServiceLayer = config('generator.use_service_layer', false);
+        $useRequestLayer = config('generator.use_request_layer', false);
+
         if ($useServiceLayer && $useRepositoryLayer) {
             $templateFilename = 'Controller_Service';
         } elseif ($useRepositoryLayer) {
             $templateFilename = 'Controller_Repository';
+        } elseif ($useRequestLayer) {
+            $templateFilename = 'Controller_Request';
         } else {
             $templateFilename = 'Controller';
         }

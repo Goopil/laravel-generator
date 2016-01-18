@@ -3,6 +3,7 @@
 namespace Peaches\Generator\Generators;
 
 use DB;
+use Doctrine\DBAL\Schema\Table;
 
 class ModelRelationshipsGenerator
 {
@@ -33,7 +34,6 @@ class ModelRelationshipsGenerator
         $this->schema->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 
         $this->tables = $this->schema->listTables();
-
         $this->relationships = [];
 
         //first create empty ruleset for each table
@@ -97,6 +97,8 @@ class ModelRelationshipsGenerator
                 if ($isOneToOne) {
                     $this->addOneToOneRules($tableName, $constraint);
                 } else {
+                    if(count($primaryColumns) > 1 && !config('generator.pivot_scaffold', false))
+                        continue;
                     $this->addOneToManyRules($tableName, $constraint);
                 }
             }
@@ -152,19 +154,22 @@ class ModelRelationshipsGenerator
 
     private function addManyToManyRules($table)
     {
+
         $foreign = $table->getForeignKeys();
 
-        $fk1 = $foreign[0];
+        $fk1 = array_values($foreign)[0];
         $fk1Table = $fk1->getForeignTableName();
         $fk1Field = current($fk1->getLocalColumns());
 
-        $fk2 = $foreign[1];
+        $fk2 = array_values($foreign)[1];
         $fk2Table = $fk2->getForeignTableName();
         $fk2Field = current($fk2->getLocalColumns());
 
+        $pivofields = array_diff(array_keys($table->getColumns()), [$fk1Field, $fk2Field]);
+
         //User belongstomany groups user_group, user_id, group_id
-        $this->relationships[$fk1Table]['belongsToMany'][] = [$fk2Table, $table, $fk1Field, $fk2Field];
-        $this->relationships[$fk2Table]['belongsToMany'][] = [$fk1Table, $table, $fk2Field, $fk1Field];
+        $this->relationships[$fk1Table]['belongsToMany'][] = [$fk2Table, $table, $fk1Field, $fk2Field, $pivofields];
+        $this->relationships[$fk2Table]['belongsToMany'][] = [$fk1Table, $table, $fk2Field, $fk1Field, $pivofields];
     }
 
     /**
@@ -283,13 +288,15 @@ class ModelRelationshipsGenerator
         foreach ($rulesContainer as $rules) {
             $belongsToManyModel = $this->generateModelNameFromTableName($rules[0]);
             $through = $rules[1];
+
             $key1 = $rules[2];
             $key2 = $rules[3];
+            $pivotFields = sizeof($rules[4]) > 0 ? '->withPivot(\''. implode("','",$rules[4]) ."')" : '';
 
             $belongsToManyFunctionName = $this->getPluralFunctionName($rules[0]);
 
             $function = "\n\tpublic function $belongsToManyFunctionName() {";
-            $function .= "\n\t\treturn \$this->belongsToMany('$belongsToManyModel', '$through', '$key1', '$key2');";
+            $function .= "\n\t\treturn \$this->belongsToMany('$belongsToManyModel', '{$through->getName()}', '$key1', '$key2')$pivotFields;";
             $function .= "\n\t}";
 
             $functions[] = $function;
@@ -311,7 +318,7 @@ class ModelRelationshipsGenerator
     private function generateModelNameFromTableName($table)
     {
         $modelName = ucfirst(camel_case(str_singular($table)));
-        $modelNameSpace = config('generate.namespace_model', 'App\Models');
+        $modelNameSpace = config('generator.namespace_model', 'App\Models');
 
         return "$modelNameSpace\\$modelName";
     }

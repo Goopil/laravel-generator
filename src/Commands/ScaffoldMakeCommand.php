@@ -87,6 +87,8 @@ class ScaffoldMakeCommand extends GeneratorCommand
         $routeGenerator = new RoutesGenerator($this);
         $modelGenerator = new ModelGenerator($this);
 
+
+
         $useRepositoryLayer = config('generator.use_repository_layer', true);
         if ($useRepositoryLayer) {
             $repositoryGenerator = new RepositoryGenerator($this);
@@ -98,7 +100,11 @@ class ScaffoldMakeCommand extends GeneratorCommand
             $serviceGenerator = new ServiceGenerator($this);
         }
 
-        $requestGenerator = new RequestGenerator($this);
+        $useRequestLayer = config('generator.use_repository_layer', true);
+        if ($useRequestLayer) {
+            $requestGenerator = new RequestGenerator($this);
+        }
+
         $controllerGenerator = new ControllerGenerator($this);
         $viewGenerator = new ViewGenerator($this);
 
@@ -110,7 +116,7 @@ class ScaffoldMakeCommand extends GeneratorCommand
                 $modelName = str_singular(studly_case($tableName));
             }
 
-            $this->comment('Generating scaffold for: ' . $tableName);
+
 
             $data = array_merge($configData, [
                 'TABLE_NAME' => $tableName,
@@ -122,11 +128,20 @@ class ScaffoldMakeCommand extends GeneratorCommand
                 'VIEW_FOLDER_NAME' => snake_case($tableName),
             ]);
 
-            // update route
-            $routeGenerator->generate($data);
-
             // create a model
             $modelGenerator->generate($data);
+
+            // skip pivot if scaffold is disabled
+            if(!config('generator.pivot_scaffold', false) && $modelGenerator->isPivots)
+            {
+                $this->comment('skipping scaffold for pivot model: ' . $tableName);
+                continue;
+            }
+
+            $this->comment('Generating scaffold for: ' . $tableName);
+
+            // update route
+            $routeGenerator->generate($data);
 
             if (isset($repositoryGenerator)) {
                 // create a repository
@@ -138,9 +153,10 @@ class ScaffoldMakeCommand extends GeneratorCommand
                 $serviceGenerator->generate($data);
             }
 
-            // create request files
-            $requestGenerator->generate($data);
-
+            if (isset($serviceGenerator)) {
+                // create request files
+                $requestGenerator->generate($data);
+            }
             // create a controller
             $controllerGenerator->generate($data);
 
