@@ -2,10 +2,10 @@
 
 namespace $NAMESPACE_REQUEST$;
 
-use $BASE_NAME$\Request;
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
+$BASE_REQUEST$
 
-class Update$MODEL_NAME$Request extends Request {
+class $REQUEST_CONTEXT$$MODEL_NAME$Request $BASE_REQUEST_EXTEND$ {
 
 	/**
 	 * Determine if the user is authorized to make this request.

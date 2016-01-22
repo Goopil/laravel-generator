@@ -12,7 +12,6 @@ return [
      */
 
     'base_controller' => 'App\Http\Controllers\Controller',
-    'base_name'       => 'App\\',
 
     /*
     |--------------------------------------------------------------------------
@@ -118,7 +117,7 @@ return [
     'use_request_layer'    => false,
 
     // pivots tables included in scaffolding
-    'pivot_scaffold' => true,
+    'pivot_scaffold' => false,
 
     /*
     |--------------------------------------------------------------------------

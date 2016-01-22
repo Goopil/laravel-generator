@@ -87,8 +87,6 @@ class ScaffoldMakeCommand extends GeneratorCommand
         $routeGenerator = new RoutesGenerator($this);
         $modelGenerator = new ModelGenerator($this);
 
-
-
         $useRepositoryLayer = config('generator.use_repository_layer', true);
         if ($useRepositoryLayer) {
             $repositoryGenerator = new RepositoryGenerator($this);
@@ -98,11 +96,6 @@ class ScaffoldMakeCommand extends GeneratorCommand
         $useServiceLayer = config('generator.use_service_layer', true);
         if ($useServiceLayer) {
             $serviceGenerator = new ServiceGenerator($this);
-        }
-
-        $useRequestLayer = config('generator.use_repository_layer', true);
-        if ($useRequestLayer) {
-            $requestGenerator = new RequestGenerator($this);
         }
 
         $controllerGenerator = new ControllerGenerator($this);
@@ -116,8 +109,6 @@ class ScaffoldMakeCommand extends GeneratorCommand
                 $modelName = str_singular(studly_case($tableName));
             }
 
-
-
             $data = array_merge($configData, [
                 'TABLE_NAME' => $tableName,
                 'MODEL_NAME' => $modelName,
@@ -127,6 +118,30 @@ class ScaffoldMakeCommand extends GeneratorCommand
                 'RESOURCE_URL' => str_slug($tableName),
                 'VIEW_FOLDER_NAME' => snake_case($tableName),
             ]);
+
+            // request handler
+            $requestGenerator = new RequestGenerator($this);
+
+            $useRequestLayer = config('generator.use_request_layer', true);
+            if ($useRequestLayer) {
+
+                $requestData = [
+                    'USE_REQUEST' => "use {$configData['NAMESPACE_REQUEST']}\\Create{$modelName}Request;\nuse {$configData['NAMESPACE_REQUEST']}\\Update{$modelName}Request;",
+                    'UPDATE_REQUEST' => "Create{$modelName}Request",
+                    'CREATE_REQUEST' => "Update{$modelName}Request"
+                ];
+            }
+            else
+            {
+                $requestData = [
+                    'USE_REQUEST' => 'use App\Http\Requests\Request;',
+                    'UPDATE_REQUEST' => 'Request',
+                    'CREATE_REQUEST' => 'Request'
+                ];
+            }
+
+            $data = array_merge($data, $requestData);
+
 
             // create a model
             $modelGenerator->generate($data);
@@ -153,7 +168,7 @@ class ScaffoldMakeCommand extends GeneratorCommand
                 $serviceGenerator->generate($data);
             }
 
-            if (isset($serviceGenerator)) {
+            if (isset($useRequestLayer)) {
                 // create request files
                 $requestGenerator->generate($data);
             }

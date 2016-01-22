@@ -28,7 +28,9 @@ class RepositoryGenerator extends BaseGenerator implements GeneratorInterface
     {
         $filename = $data['MODEL_NAME'] . 'Repository.php';
 
-        $this->generateFile($filename, $data);
+        $templateData = $this->getExtendsClass('repository',$data);
+
+        $this->generateFile($filename, $templateData);
     }
 
     public function generateBaseRepository()

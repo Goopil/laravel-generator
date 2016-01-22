@@ -21,19 +21,21 @@ class RequestGenerator extends BaseGenerator implements GeneratorInterface
      */
     public function getTemplatePath()
     {
-        return '';
+        return 'scaffold/requests/Request';
     }
 
     public function generate($data = [])
     {
-        // create request
-        $this->setTemplatePath('scaffold/requests/CreateRequest');
-        $filename = 'Create' . $data['MODEL_NAME'] . 'Request.php';
-        $this->generateFile($filename, $data);
+        $contexts = ['Create', 'Update'];
 
-        // update request
-        $this->setTemplatePath('scaffold/requests/UpdateRequest');
-        $filename = 'Update' . $data['MODEL_NAME'] . 'Request.php';
-        $this->generateFile($filename, $data);
+        $templateData = $this->getExtendsClass('request',$data);
+
+        foreach($contexts as $context)
+        {
+            $templateData['REQUEST_CONTEXT'] = $context;
+            $filename =  $context . $data['MODEL_NAME'] . 'Request.php';
+
+            $this->generateFile($filename, $templateData);
+        }
     }
 }

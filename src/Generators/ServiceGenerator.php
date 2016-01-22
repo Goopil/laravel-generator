@@ -28,6 +28,8 @@ class ServiceGenerator extends BaseGenerator implements GeneratorInterface
     {
         $filename = $data['MODEL_NAME'] . 'Service.php';
 
-        $this->generateFile($filename, $data);
+        $templateData = $this->getExtendsClass('service',$data);
+
+        $this->generateFile($filename, $templateData);
     }
 }

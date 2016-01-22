@@ -5,6 +5,7 @@ namespace $NAMESPACE_CONTROLLER$;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use Flash;
+$USE_REQUEST$
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
 use $BASE_CONTROLLER$ as BaseController;
 
@@ -36,11 +37,11 @@ class $MODEL_NAME$Controller extends BaseController
     /**
      * Store a newly created $MODEL_NAME$ in storage.
      *
-     * @param Request $request
+     * @param Create$MODEL_NAME$Request $request
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store($CREATE_REQUEST$ $request)
     {
         $input = $request->all();
 
@@ -83,11 +84,11 @@ class $MODEL_NAME$Controller extends BaseController
      * Update the specified $MODEL_NAME$ in storage.
      *
      * @param int $id
-     * @param Request $request
+     * @param Update$MODEL_NAME$Request $request
      *
      * @return Response
      */
-    public function update($id, Request $request)
+     public function update($id, $UPDATE_REQUEST$ $request)
     {
         $$MODEL_NAME_CAMEL$ = $this->exist($id);
 

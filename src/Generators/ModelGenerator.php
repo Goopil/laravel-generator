@@ -84,6 +84,8 @@ class ModelGenerator extends BaseGenerator implements GeneratorInterface
 
         $templateData = $this->getTemplateData($schema, $data);
 
+        $templateData = $this->getExtendsClass('model',$templateData);
+
         if(!config('generator.pivot_scaffold', false) && $this->isPivots){
             return false;
         }

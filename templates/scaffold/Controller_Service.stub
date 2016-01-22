@@ -3,10 +3,8 @@
 namespace $NAMESPACE_CONTROLLER$;
 
 use Flash;
-use $NAMESPACE_REQUEST$;
+$UPDATE_REQUEST$
 use $NAMESPACE_SERVICE$\$MODEL_NAME$Service;
-use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
-use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
 use $BASE_CONTROLLER$ as BaseController;
 
 class $MODEL_NAME$Controller extends BaseController
@@ -51,7 +49,7 @@ class $MODEL_NAME$Controller extends BaseController
      *
      * @return Response
      */
-    public function store(Create$MODEL_NAME$Request $request)
+    public function store($CREATE_REQUEST$ $request)
     {
         $input = $request->all();
 
@@ -98,7 +96,7 @@ class $MODEL_NAME$Controller extends BaseController
      *
      * @return Response
      */
-    public function update($id, Update$MODEL_NAME$Request $request)
+    public function update($id, $UPDATE_REQUEST$ $request)
     {
         $this->exist($id);
 

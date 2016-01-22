@@ -3,9 +3,10 @@
 namespace $NAMESPACE_SERVICE$;
 
 use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
+$BASE_SERVICE$
 
-class $MODEL_NAME$Service
-{
+class $MODEL_NAME$Service $BASE_SERVICE_EXTEND$ {
+
 	/**
 	 * Repository variable
 	 *

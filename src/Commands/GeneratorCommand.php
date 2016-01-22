@@ -114,32 +114,28 @@ abstract class GeneratorCommand extends Command
 
         $routePrefix = config('generator.route_prefix', '');
         // check route prefix end with '.'
-        if (strlen($routePrefix) > 0 && $routePrefix[strlen($routePrefix) - 1] !== '.') {
+        if ( strlen($routePrefix) > 0 && $routePrefix[ strlen($routePrefix) - 1 ] !== '.' ) {
             $routePrefix .= '.';
         }
 
         return [
-            'BASE_CONTROLLER' => config('generator.base_controller', 'App\Base\Controller'),
 
-            'BASE_NAME' => config('generator.base_name', 'App\Base'),
+            'NAMESPACE_MODEL' => config('generator.namespace_model', 'App\Entities\Models'),
 
-            'NAMESPACE_MODEL' => config('generator.namespace_model', 'App\Models'),
+            'NAMESPACE_CONTROLLER' => config('generator.namespace_controller', 'App\Http\Controllers'),
 
-            'NAMESPACE_MODEL_EXTEND' => config('generator.model_extend_class', 'Illuminate\Database\Eloquent\Model'),
+            'NAMESPACE_REQUEST' => config('generator.namespace_request', 'App\Http\Requests'),
 
-            'NAMESPACE_CONTROLLER' => config('generator.namespace_controller', 'App\Controllers'),
+            'NAMESPACE_REPOSITORY' => config('generator.namespace_repository', 'App\Entities\Repositories'),
 
-            'NAMESPACE_REQUEST' => config('generator.namespace_request', 'App\Requests'),
-
-            'NAMESPACE_REPOSITORY' => config('generator.namespace_repository', 'App\Repositories'),
-
-            'NAMESPACE_SERVICE' => config('generator.namespace_service', 'App\Services'),
+            'NAMESPACE_SERVICE' => config('generator.namespace_service', 'App\Entities\Services'),
 
             'MAIN_LAYOUT' => config('generator.main_layout', 'layout.app'),
 
             'VIEW_PATH' => $viewPath,
 
             'ROUTE_PREFIX' => $routePrefix,
+
         ];
     }
 }
