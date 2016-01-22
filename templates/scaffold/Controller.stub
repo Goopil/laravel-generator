@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Flash;
 $USE_REQUEST$
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
-use $BASE_CONTROLLER$ as BaseController;
+$BASE_CONTROLLER$
 
-class $MODEL_NAME$Controller extends BaseController
+class $MODEL_NAME$Controller $BASE_CONTROLLER_EXTEND$
 {
 
     /**
@@ -137,4 +137,6 @@ class $MODEL_NAME$Controller extends BaseController
 
         return $$MODEL_NAME_CAMEL$;
     }
+
+    /* ENDGENERATION */
 }

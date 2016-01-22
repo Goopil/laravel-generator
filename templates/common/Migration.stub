@@ -28,4 +28,5 @@ class $CLASS$ extends Migration
         Schema::drop('$TABLE$');
     }
 
+    /* ENDGENERATION */
 }

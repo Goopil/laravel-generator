@@ -27,4 +27,5 @@ class $REQUEST_CONTEXT$$MODEL_NAME$Request $BASE_REQUEST_EXTEND$ {
 		return $MODEL_NAME$::$rules;
 	}
 
+	/* ENDGENERATION */
 }

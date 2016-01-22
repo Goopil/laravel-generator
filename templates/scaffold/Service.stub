@@ -26,4 +26,6 @@ class $MODEL_NAME$Service $BASE_SERVICE_EXTEND$ {
     {
         return call_user_func_array([$this->$MODEL_NAME_CAMEL$Repository, $method], $args);
     }
+
+    /* ENDGENERATION */
 }

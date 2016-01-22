@@ -31,4 +31,5 @@ class $CLASS$ extends Migration
         });
     }
 
+    /* ENDGENERATION */
 }

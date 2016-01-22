@@ -41,4 +41,6 @@ class $MODEL_NAME$ $BASE_MODEL_EXTEND$
         $RULES$
     ];
     $RELATIONSHIPS$
+
+    /* ENDGENERATION */
 }
