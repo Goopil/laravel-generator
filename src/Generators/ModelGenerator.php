@@ -130,8 +130,6 @@ class ModelGenerator extends BaseGenerator implements GeneratorInterface
         }
         $data['FIELDS'] = implode(",\n\t\t", $fillableStr);
 
-
-
         $data['CAST'] = implode(",\n\t\t", $this->getCasts());
 
         $functions = $this->relationshipGenerator->getFunctionsFromTable($data['TABLE_NAME']);

@@ -105,11 +105,32 @@ class BaseGenerator
         if (is_null($templatePath)) {
             $templatePath = $this->templatePath;
         }
+
         $content = $this->generateContent($templatePath, $templateData);
+
+        $content = $this->getClassContent($path, $content);
 
         $this->fileHelper->put($path, $content);
 
         $this->command->info($filename . ' created successfully.');
+    }
+
+
+    protected function getClassContent($path, $content)
+    {
+
+        if(file_exists($path))
+        {
+            $fileContent = $this->fileHelper->get($path);
+
+            $template = substr($content, 0, strpos($content, '// endGeneration //'));
+
+            $contentToKeep = substr($fileContent, strrpos($fileContent, '// endGeneration //'));
+
+            return $template . $contentToKeep;
+
+        }
+        return $content;
     }
 
     /**

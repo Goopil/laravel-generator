@@ -37,6 +37,7 @@ class ControllerGenerator extends BaseGenerator implements GeneratorInterface
 
     public function generate($data = [])
     {
+
         if ($this->command->option('paginate')) {
             $data['RENDER_TYPE'] = 'paginate(' . $this->command->option('paginate') . ')';
         } else {
@@ -44,6 +45,30 @@ class ControllerGenerator extends BaseGenerator implements GeneratorInterface
         }
 
         $filename = $data['MODEL_NAME'] . 'Controller.php';
-        $this->generateFile($filename, $data);
+
+        $templateData = $this->getExtendsClass('controller',$data);
+
+        $this->generateFile($filename, $templateData);
+    }
+
+    public function requestLayer($configData, $modelName, $useRequestLayer = false)
+    {
+        if ($useRequestLayer) {
+            $requestData = [
+                'USE_REQUEST' => "use {$configData['NAMESPACE_REQUEST']}\\Create{$modelName}Request;\nuse {$configData['NAMESPACE_REQUEST']}\\Update{$modelName}Request;",
+                'UPDATE_REQUEST' => "Update{$modelName}Request",
+                'CREATE_REQUEST' => "Create{$modelName}Request"
+            ];
+        }
+        else
+        {
+            $requestData = [
+                'USE_REQUEST' => "use {$configData['NAMESPACE_REQUEST']} . ';'",
+                'UPDATE_REQUEST' => 'Request',
+                'CREATE_REQUEST' => 'Request'
+            ];
+        }
+
+        return  $requestData;
     }
 }

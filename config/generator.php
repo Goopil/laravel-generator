@@ -4,14 +4,51 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Base Controller
+    | Scaffold settings
+    |--------------------------------------------------------------------------
+    |
+    | Application layers consist of :
+    |
+    | Controllers - contains application logic and passing user input data to service
+    | Services - The middleware between controller and repository,
+    |     gather data from controller, performs validation and business logic, calling repositories for data manipulation.
+    | Repositories - layer for interaction with models and performing DB operations
+    | Request - laravel 5 request validation flow (validation pre controller)
+    | pivots - scaffold pivots tables and add direct relation (hasMany) to models
+    |
+    */
+
+    'use_repository_layer' => true,
+
+    'use_service_layer'    => true,
+
+    'use_request_layer'    => true,
+
+    'pivot_scaffold' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Base Classes
     |--------------------------------------------------------------------------
     |
     | This controller will be used as a base controller of all controllers
     |
      */
-
     'base_controller' => 'App\Http\Controllers\Controller',
+    'base_controller_as' => '',
+
+    'base_repository' => 'App\Entities\Repositories\Repository',
+    'base_repository_as' => '',
+
+    'base_service' => 'App\Entities\Services\Service',
+    'base_service_as' => '',
+
+    'base_request' => 'App\Http\Requests\Request',
+    'base_request_as' => '',
+
+    'base_model' => 'Illuminate\Database\Eloquent\Model',
+    'base_model_as' => '',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +58,6 @@ return [
     | All Classes will be created on these relevant path
     |
      */
-
     'path_migration'  => base_path('database/migrations/'),
     
     'path_model'      => app_path('Entities/Models/'),
@@ -36,9 +72,10 @@ return [
     
     'path_request'    => app_path('Http/Requests/'),
     
-    'path_route'      => app_path('routes.php'),
-    
+    'path_route'      => app_path('Http/scaffold-routes.php'),
+
     'path_factory'    => base_path('database/factories/ModelFactory.php'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +85,6 @@ return [
     | All Classes will be created with these namespaces
     |
      */
-
     'namespace_model'      => 'App\Entities\Models',
     
     'namespace_repository' => 'App\Entities\Repositories',
@@ -59,24 +95,6 @@ return [
     
     'namespace_request'    => 'App\Http\Requests',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Model extend
-    |--------------------------------------------------------------------------
-    |
-    | Model extend Configuration.
-    | By default Eloquent model will be used.
-    | If you want to extend your own custom model
-    | then you can specify "model_extend" => true and "model_extend_namespace" & "model_extend_class".
-    |
-    | e.g.
-    | 'model_extend' => true,
-    | 'model_extend_namespace' => 'App\Models\AppBaseModel as AppBaseModel',
-    | 'model_extend_class' => 'AppBaseModel',
-    |
-     */
-
-    'model_extend_class' => 'Illuminate\Database\Eloquent\Model',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,39 +103,14 @@ return [
      */
     'main_layout' => 'layouts.app',
 
+
     /*
     |--------------------------------------------------------------------------
     | Routes prefix
     |--------------------------------------------------------------------------
      */
+    'route_prefix' => 'scaffold',
 
-    'route_prefix' => '',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Scaffold setting
-    |--------------------------------------------------------------------------
-    |
-    | Application layers consist of :
-    |
-    | Controllers - contains application logic and passing user input data to service
-    | Services - The middleware between controller and repository,
-    | gather data from controller, performs validation and business logic, calling repositories for data manipulation.
-    | Repositories - layer for interaction with models and performing DB operations
-    | Eloquents - common laravel model files with relationships defined
-    |
-    | By default scaffold will automatically service and repository layer.
-    | You also can setting to only create repository
-    | Or if you want to only use Eloquent, you can set 2 below options is false.
-     */
-    'use_repository_layer' => false,
-    
-    'use_service_layer'    => false,
-
-    'use_request_layer'    => false,
-
-    // pivots tables included in scaffolding
-    'pivot_scaffold' => false,
 
     /*
     |--------------------------------------------------------------------------
